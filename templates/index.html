@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+    <head>
+        <meta charset="UTF-8">
+        <title>HLS with AES Encryption PoC</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+                src="https://unpkg.com/htmx.org@1.9.10"
+                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+                crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+        <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+    </head>
+    <body class="h-full flex items-center justify-center bg-slate-50">
+        <section class="p-8 border border-slate-300 rounded-md bg-white">
+            <h1 class="text-3xl text-center text-slate-700 font-bold pb-8">HLS with AES Encryption</h1>
+            <div class="relative flex items-center justify-center min-w-[40rem] min-h-[20rem] rounded-md bg-slate-200">
+                <span class="text-xl text-slate-600" id="video-placeholder">Your video will appear here</span>
+            </div>
+            <form
+                    class="pt-4"
+                    hx-encoding="multipart/form-data"
+                    hx-post="/video-upload"
+                    hx-trigger="change"
+                    hx-target="#video-placeholder"
+            >
+                <input
+                        type="file"
+                        name="video"
+                        id="video"
+                        class="block mx-auto w-full p-2 border border-slate-300 rounded-md text-slate-600"
+                        accept="application/mp4"
+                >
+            </form>
+            <pre
+                    hx-ext="sse" sse-connect="/video-progress" sse-swap="message"
+                    class="p-4 bg-slate-200 mt-4 rounded-md"
+            >The video encryption progress will appear here</pre>
+        </section>
+    </body>
+</html>
